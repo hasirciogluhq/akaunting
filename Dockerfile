@@ -61,9 +61,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progre
 # Run only essential Laravel setup commands (package:discover is required)
 RUN php artisan package:discover --ansi || true
 
-# Copy trusted proxy configuration (these files are now available after COPY . .)
-COPY docker/trusted-proxy.php config/trusted-proxy.php
-COPY docker/proxy-middleware.php app/Http/Middleware/TrustedProxyMiddleware.php
+# Copy proxy setup script
 COPY docker/proxy-setup.sh docker/proxy-setup.sh
 
 # Install Node.js dependencies and build assets with increased memory limit
