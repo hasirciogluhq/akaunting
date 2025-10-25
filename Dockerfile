@@ -61,9 +61,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progre
 # Run only essential Laravel setup commands (package:discover is required)
 RUN php artisan package:discover --ansi || true
 
-# Copy proxy setup script
-COPY docker/proxy-setup.sh docker/proxy-setup.sh
-
 # Install Node.js dependencies and build assets with increased memory limit
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm install && npm run production
@@ -96,4 +93,4 @@ COPY docker/php.ini /usr/local/etc/php/php.ini
 EXPOSE 80
 
 # Start supervisor
-CMD ["/bin/sh", "-c", "/var/www/html/docker/proxy-setup.sh && /usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/bin/sh", "-c", "/var/www/html/docker/proxy-setup.sh && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf"]
