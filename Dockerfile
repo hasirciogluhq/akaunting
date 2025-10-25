@@ -72,7 +72,7 @@ RUN npm install && npm run production
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] || [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then \
     echo "ARM platform detected - optimizing for ARM"; \
     # ARM-specific optimizations can be added here
-    fi
+    fi 
 
 # Set proper permissions and optimize
 RUN chown -R www-data:www-data /var/www/html \
