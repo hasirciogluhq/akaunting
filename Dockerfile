@@ -62,7 +62,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progre
 RUN php artisan package:discover --ansi || true
 
 # Install Node.js dependencies and build assets with increased memory limit
-ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm install && npm run production
 
 # Platform-specific optimizations
