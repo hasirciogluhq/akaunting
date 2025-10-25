@@ -10,9 +10,12 @@ on:
       - master
       - hasirciogluhq/features/docker-build-system
   push:
+    branches:
+      - hasirciogluhq/features/docker-build-system
     tags:
       - "v*"
       - "v*.*.*"
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -23,7 +26,9 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     if: |
+      github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/hasirciogluhq/features/docker-build-system') ||
       (github.event.workflow_run.conclusion == 'success' && 
        github.event.workflow_run.event == 'push' &&
        (github.event.workflow_run.head_branch == 'main' || 
