@@ -21,14 +21,19 @@ else
     echo "==> APP_KEY already exists, skipping..."
 fi
 
-# Step 3: Run Laravel optimizations
+# Step 3: Run database migrations
+echo "==> Running database migrations..."
+php artisan migrate --force
+echo "✓ Database migrations completed"
+
+# Step 4: Run Laravel optimizations
 echo "==> Running Laravel optimizations..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 echo "✓ Laravel caches created"
 
-# Step 4: Ensure proper permissions
+# Step 5: Ensure proper permissions
 echo "==> Setting proper permissions..."
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache

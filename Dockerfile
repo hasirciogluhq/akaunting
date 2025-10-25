@@ -55,15 +55,19 @@ WORKDIR /var/www/html
 # Copy application code first (required for autoload helpers)
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+# Install PHP dependencies without running post-install scripts (they require database)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --no-scripts
+
+# Run only essential Laravel setup commands (package:discover is required)
+RUN php artisan package:discover --ansi || true
 
 # Copy trusted proxy configuration (these files are now available after COPY . .)
 COPY docker/trusted-proxy.php config/trusted-proxy.php
 COPY docker/proxy-middleware.php app/Http/Middleware/TrustedProxyMiddleware.php
 COPY docker/proxy-setup.sh docker/proxy-setup.sh
 
-# Install Node.js dependencies and build assets - Multi-platform support
+# Install Node.js dependencies and build assets with increased memory limit
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm install && npm run production
 
 # Platform-specific optimizations
