@@ -1,0 +1,66 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+SECURITY.md
+LICENSE.txt
+*.md
+
+# Development files
+.env
+.env.example
+.env.local
+.env.testing
+.env.production
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Composer
+vendor/
+composer.phar
+
+# Laravel specific
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+
+# Testing
+tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Build artifacts
+public/hot
+public/storage
+public/mix-manifest.json
+
+# Docker
+Dockerfile
+.dockerignore
+# docker/ - We need docker/ directory for configuration files
+
+# GitHub
+.github/
+
+# Temporary files
+*.tmp
+*.temp
