@@ -12,10 +12,9 @@ When the container starts, it automatically:
 
 1. ✅ **Creates `.env` file** from `.env.example` if it doesn't exist
 2. ✅ **Generates `APP_KEY`** automatically using `php artisan key:generate`
-3. ✅ **Applies Docker environment variables** to override `.env` settings
-4. ✅ **Sets up proxy configuration** for Cloudflare/reverse proxy support
-5. ✅ **Optimizes Laravel** (config cache, route cache, view cache)
-6. ✅ **Sets proper permissions** for storage and cache directories
+3. ✅ **Runs database migrations** using `php artisan migrate --force`
+4. ✅ **Optimizes Laravel** (config cache, route cache, view cache)
+5. ✅ **Sets proper permissions** for storage and cache directories
 
 ### What You Need to Provide
 
@@ -28,8 +27,6 @@ Only provide these **essential external variables**:
 | `DB_DATABASE` | Yes | Database name | `akaunting` |
 | `DB_USERNAME` | Yes | Database username | `akaunting_user` |
 | `DB_PASSWORD` | Yes | Database password | `your-secure-password` |
-| `TRUSTED_PROXIES` | Optional | Trusted proxy IPs | `*` (default, trusts all) |
-| `FORCE_HTTPS` | Optional | Force HTTPS scheme | `true` (default) |
 
 ## Deployment Methods
 
@@ -83,10 +80,6 @@ services:
       DB_DATABASE: akaunting
       DB_USERNAME: akaunting_user
       DB_PASSWORD: secure_password
-      
-      # Proxy Configuration (Optional)
-      TRUSTED_PROXIES: "*"
-      FORCE_HTTPS: "true"
     depends_on:
       - db
     volumes:
@@ -164,10 +157,6 @@ spec:
             secretKeyRef:
               name: akaunting-secrets
               key: DB_PASSWORD
-        - name: TRUSTED_PROXIES
-          value: "*"
-        - name: FORCE_HTTPS
-          value: "true"
         volumeMounts:
         - name: storage
           mountPath: /var/www/html/storage
